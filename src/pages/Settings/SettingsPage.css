@@ -1,0 +1,121 @@
+.settings-page {}
+
+.settings-section {
+  margin-bottom: 24px;
+}
+
+.settings-section-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+  padding-left: 4px;
+}
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: default;
+}
+
+.settings-action {
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.settings-action:hover { background: var(--bg-input); }
+
+.settings-row-icon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.settings-row-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+}
+
+.settings-row-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.settings-row-sub {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.settings-row-chevron {
+  color: var(--text-muted);
+  font-size: 1rem;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+/* Unit toggle */
+.unit-toggle {
+  display: flex;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+.unit-btn {
+  padding: 7px 12px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.unit-btn.active {
+  background: var(--primary);
+  color: white;
+}
+
+/* Saved locations */
+.saved-loc-select {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  padding: 0;
+}
+.saved-loc-remove {
+  border: none;
+  background: #fee2e2;
+  color: #dc2626;
+  border-radius: 8px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+.saved-loc-remove:hover { background: #fecaca; }
+[data-theme="dark"] .saved-loc-remove {
+  background: #3b1919;
+  color: #f87171;
+}
