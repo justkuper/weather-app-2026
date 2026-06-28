@@ -44,7 +44,7 @@ async function reverseGeocode(lat, lon) {
   try {
     const res = await fetch(
       `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`,
-      { headers: { 'Accept-Language': 'en' } }
+      { headers: { 'Accept-Language': 'en', 'User-Agent': 'WeatherApp/1.0' } }
     )
     const data = await res.json()
     return (
@@ -162,20 +162,35 @@ export function WeatherProvider({ children }) {
       setLoading(false)
       return
     }
-    navigator.geolocation.getCurrentPosition(
-      async pos => {
-        const { latitude, longitude } = pos.coords
-        await loadWeather(latitude, longitude, null)
-      },
-      err => {
-        setGpsError(
-          err.code === 1
-            ? 'Location permission denied. Please allow location access or search for a city.'
-            : 'Unable to retrieve your location. Please search for a city.'
-        )
+
+    const onSuccess = async pos => {
+      const { latitude, longitude } = pos.coords
+      await loadWeather(latitude, longitude, null)
+    }
+
+    const onError = err => {
+      if (err.code === 1) {
+        // Permission denied — no point retrying
+        setGpsError('Location permission denied. Please allow location access or search for a city.')
         setLoading(false)
-      },
-      { timeout: 10000 }
+        return
+      }
+      // High-accuracy failed (common on mobile indoors) — retry with low accuracy
+      navigator.geolocation.getCurrentPosition(
+        onSuccess,
+        () => {
+          setGpsError('Unable to retrieve your location. Please search for a city.')
+          setLoading(false)
+        },
+        { enableHighAccuracy: false, timeout: 20000, maximumAge: 60000 }
+      )
+    }
+
+    // First attempt: high accuracy (uses GPS hardware on mobile)
+    navigator.geolocation.getCurrentPosition(
+      onSuccess,
+      onError,
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
     )
   }, [loadWeather])
 
